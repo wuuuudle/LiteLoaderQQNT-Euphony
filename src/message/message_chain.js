@@ -24,6 +24,15 @@ class MessageChain {
     }
 
     /**
+     * 获原生消息链 `List` 对象。
+     *
+     * @returns { SingleMessage[] } 原生消息链所的 `List` 对象。
+     */
+    get() {
+        return this.#messages;
+    }
+
+    /**
      * 将一个消息元素添加至该消息链中。
      * 
      * @param { SingleMessage } value 要添加的消息元素。
