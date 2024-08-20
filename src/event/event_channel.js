@@ -22,7 +22,7 @@ class EventChannel {
             if (!msg) {
                 return;
             }
-            const contact = msg.chatType == 1 ? Friend.make(msg.peerUin, msg.peerUid) : (msg.chatType == 2 ? Group.make(msg.peerUin) : null);
+            const contact = msg.chatType == 1 ? Friend.make(msg.peerUin, msg.peerUid) : (msg.chatType == 2 ? Group.make(msg.peerUin).getMemberFromUin(msg.senderUin) : null);
             const source = new MessageSource(msg.msgId, contact);
             eventChannel.call('receive-message', MessageChain.fromNative(msg.elements), source);
         }
@@ -34,7 +34,7 @@ class EventChannel {
             if (!msgRecord) {
                 return;
             }
-            const contact = msgRecord.chatType == 1 ? Friend.make(msgRecord.peerUin, msgRecord.peerUid) : (msgRecord.chatType == 2 ? Group.make(msgRecord.peerUin) : null);
+            const contact = msgRecord.chatType == 1 ? Friend.make(msgRecord.peerUin, msgRecord.peerUid) : (msgRecord.chatType == 2 ? Group.make(msgRecord.peerUin).getMemberFromUin(msgRecord.senderUin) : null);
             const source = new MessageSource(msgRecord.msgId, contact);
             eventChannel.call('send-message', MessageChain.fromNative(msgRecord.elements), source);
         });
