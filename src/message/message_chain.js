@@ -28,7 +28,7 @@ class MessageChain {
      *
      * @returns { SingleMessage[] } 原生消息链所的 `List` 对象。
      */
-    get() {
+    getList() {
         return this.#messages;
     }
 
@@ -85,7 +85,7 @@ class MessageChain {
      * 
      * 但由于 `At` 类型不包括群信息，目前 `At` 只会被视为 "**@qq号**" 的形式。
      * 
-     * @returns { String } 转化后的字符串。
+     * @returns { String[] } 转化后的字符串。
      */
     contentToString() {
         const result = [];
@@ -93,7 +93,7 @@ class MessageChain {
             if (message instanceof PlainText) {
                 result.push(message.getContent());
             } else if (message instanceof At) {
-                result.push(`@${ message.getUin() }`);
+                result.push(`@${ message.getUid() }`);
             } else if (message instanceof AtAll) {
                 result.push(message.getContent());
             } else if (message instanceof Image) {
@@ -102,7 +102,7 @@ class MessageChain {
                 result.push('[语音]');
             }
         }
-        return result.join('');
+        return result;
     }
 
     /**
