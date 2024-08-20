@@ -3,16 +3,12 @@
     "type": "framework",
     "name": "Euphony",
     "slug": "euphony",
-    "description": "一个为LiteLoaderQQNT插件提供基础功能的依赖",
-    "version": "1.1.1",
+    "description": "一个为LiteLoaderQQNT插件提供基础功能的依赖，wuuuudle修改版本",
+    "version": "1.1.2",
     "authors": [{
-        "name": "xtaw",
-        "link": "https://github.com/xtaw"
+        "name": "wuuuudle",
+        "link": "https://github.com/wuuuudle"
     }],
-    "repository": {
-        "repo": "xtaw/LiteLoaderQQNT-Euphony",
-        "branch": "master"
-    },
     "platform": ["win32", "linux", "darwin"],
     "injects": {
         "renderer": "./src/main/renderer.js",
