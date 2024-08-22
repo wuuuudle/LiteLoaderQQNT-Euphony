@@ -61,7 +61,6 @@ class MessageSource {
     async setMsgRead() {
         if (this.#contact instanceof Member) {
             // 群消息，只能全标记为已读
-            console.log('source', this.#contact.getGroup().toPeer());
             await euphonyNative.invokeNative('ns-ntApi', 'nodeIKernelMsgService/setMsgRead', false, {
                 peer: this.#contact.getGroup().toPeer()
             });
