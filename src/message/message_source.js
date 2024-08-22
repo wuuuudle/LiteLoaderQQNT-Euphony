@@ -1,6 +1,8 @@
+import { Member } from '../index.js';
+
 /**
  * `MessageSource` 类型代表一条消息的来源。
- * 
+ *
  * @property { String } #msgId 该消息来源的 **msgId**。
  * @property { Contact } #contact 该消息来源的联系人。
  */
@@ -12,7 +14,7 @@ class MessageSource {
 
     /**
      * 通过 **msgId** 和联系人构造一个消息来源。
-     * 
+     *
      * @param { String } msgId 消息的 **msgId**。
      * @param { Contact } contact 来源联系人。
      */
@@ -23,7 +25,7 @@ class MessageSource {
 
     /**
      * 返回该消息来源的 `#msgId` 属性。
-     * 
+     *
      * @returns { String } 该消息来源的 `#msgId` 属性。
      */
     getMsgId() {
@@ -32,7 +34,7 @@ class MessageSource {
 
     /**
      * 返回该消息来源的 `#contact` 属性。
-     * 
+     *
      * @returns { Contact } 该消息来源的 `#contact` 属性。
      */
     getContact() {
@@ -51,6 +53,24 @@ class MessageSource {
         });
     }
 
+    /**
+     * 标记消息已读
+     *
+     * @returns {Promise<void>}
+     */
+    async setMsgRead() {
+        if (this.#contact instanceof Member) {
+            // 群消息，只能全标记为已读
+            console.log('source', this.#contact.getGroup().toPeer());
+            await euphonyNative.invokeNative('ns-ntApi', 'nodeIKernelMsgService/setMsgRead', false, {
+                peer: this.#contact.getGroup().toPeer()
+            });
+        } else {
+            await euphonyNative.invokeNative('ns-ntApi', 'nodeIKernelMsgService/setMsgRead', false, {
+                peer: this.#contact.toPeer()
+            });
+        }
+    }
 }
 
 export default MessageSource
