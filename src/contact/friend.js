@@ -107,10 +107,10 @@ class Friend extends Contact {
      */
     getBirthday() {
         const buddy = this.getNative();
-        if (!buddy) {
+        if (!buddy || !buddy.baseInfo) {
             return null;
         }
-        return new Date(buddy.birthday_year, buddy.birthday_month - 1, buddy.birthday_day);
+        return new Date(buddy.baseInfo.birthday_year, buddy.baseInfo.birthday_month - 1, buddy.baseInfo.birthday_day);
     }
 
     /**
@@ -119,7 +119,7 @@ class Friend extends Contact {
      * @returns { String } 个性签名。
      */
     getBio() {
-        return this.getNative()?.longNick;
+        return this.getNative()?.baseInfo?.longNick;
     }
 
     /**
@@ -128,7 +128,7 @@ class Friend extends Contact {
      * @returns { String } 昵称。
      */
     getNick() {
-        return this.getNative()?.nick;
+        return this.getNative()?.coreInfo?.nick;
     }
 
     /**
@@ -137,7 +137,7 @@ class Friend extends Contact {
      * @returns { String } **qid**。
      */
     getQid() {
-        return this.getNative()?.qid;
+        return this.getNative()?.baseInfo?.qid;
     }
 
     /**
@@ -146,7 +146,7 @@ class Friend extends Contact {
      * @returns { String } 好友备注。
      */
     getRemark() {
-        return this.getNative()?.remark;
+        return this.getNative()?.coreInfo?.remark;
     }
 
     /**

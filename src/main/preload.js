@@ -83,9 +83,6 @@ contextBridge.exposeInMainWorld('euphonyNative', {
 });
 
 contextBridge.exposeInMainWorld('euphonyInternal', {
-    getClientKey: () => ipcRenderer.invoke(
-        'LiteLoader.euphony.getClientKey'
-    ),
     getPskey: (uin, clientKey, keyIndex, domain) => ipcRenderer.invoke(
         'LiteLoader.euphony.getPskey',
         uin,
