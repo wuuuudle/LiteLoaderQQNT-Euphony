@@ -1,8 +1,5 @@
 const { ipcMain } = require("electron");
 
-const Process = require('process');
-const os = require('os');
-
 exports.onBrowserWindowCreated = window => {
     window.webContents.on('ipc-message-sync', (event, channel) => {
         if (channel == '___!boot') {
@@ -13,29 +10,6 @@ exports.onBrowserWindowCreated = window => {
         }
     });
 }
-
-let NodeIQQNTWrapperSession;
-
-const originalDlopen = Process.dlopen;
-Process.dlopen = (module, filename, flags = os.constants.dlopen.RTLD_LAZY) => {
-    const originalResult = originalDlopen(module, filename, flags);
-    for (const name in module.exports) {
-        module.exports[name] = new Proxy(module.exports[name], {
-            construct: (target, args) => {
-                const result = new target(...args);
-                if (name == 'NodeIQQNTWrapperSession') {
-                    NodeIQQNTWrapperSession = result;
-                }
-                return result;
-            }
-        });
-    }
-    return originalResult;
-}
-
-ipcMain.handle('LiteLoader.euphony.getClientKey', async () => {
-    return await NodeIQQNTWrapperSession.getTicketService().forceFetchClientKey('');
-});
 
 ipcMain.handle('LiteLoader.euphony.getPskey', async (event, uin, clientKey, keyIndex, domain) => {
     try {
